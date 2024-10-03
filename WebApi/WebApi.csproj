@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <IsDockerBuild>false</IsDockerBuild>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,7 +14,7 @@
     </Content>
   </ItemGroup>
 
-  <Target Name="PostpublishScript" AfterTargets="Publish">
+  <Target Name="PostpublishScript" AfterTargets="Publish" Condition="$(IsDockerBuild) == 'false'">
     <Exec Command="dotnet publish ../WebJobContinuous/WebJobContinuous.csproj -o $(PublishDir)app_data/Jobs/Continuous/webjob-continuous"/>
     <Exec Command="dotnet publish ../WebJobTriggered/WebJobTriggered.csproj -o $(PublishDir)app_data/Jobs/Triggered/webjob-triggered"/>
   </Target>
