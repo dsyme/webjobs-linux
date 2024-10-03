@@ -34,7 +34,7 @@ jobs:
           uses: docker/metadata-action@v5
           with:
             images: ${{ env.REGISTRY_NAME }}.azureacr.io/webjob-linux-docker
-            tags: type=ref            
+            tags: type=sha            
 
         - name: Build and push Docker image
           uses: docker/build-push-action@v6
