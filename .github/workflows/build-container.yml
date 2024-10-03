@@ -7,9 +7,12 @@ on:
 
 env:
   REGISTRY_NAME: webjobslinuxacr
-  AZURE_CORE_OUTPUT: none
   RG: webjobs-linux-rg
   SITE_NAME: webjobs-linux-web-app-container
+
+concurrency:
+  group: ${{ github.event.number || github.ref }}
+  cancel-in-progress: true  
 
 jobs:
   build:
@@ -47,6 +50,12 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
+      - name: Deploy WebApi
+        uses: azure/webapps-deploy@v3
+        with: 
+          app-name: ${{ env.SITE_NAME }}
+          images: '${{ env.REGISTRY_NAME }}.azurecr.io/webjob-linux-docker:sha-${{ github.sha }}' 
+
       - name: Publish WebJobs
         run: |
           dotnet publish -c Release -o ./publish/WebJobTriggered ./WebJobTriggered/WebJobTriggered.csproj
@@ -56,5 +65,5 @@ jobs:
 
       - name: Deploy WebJobs
         run: |
-          az webapp deploy --resource-group ${{ env.RG }} --name ${{ env.SITE_NAME }} --src-path ./publish/WebJobTriggered.zip --target-path app_data/jobs/triggered/webjob-triggered --type zip --restart false
+          az webapp deploy --resource-group ${{ env.RG }} --name ${{ env.SITE_NAME }} --src-path ./publish/WebJobTriggered.zip --target-path app_data/jobs/triggered/webjob-triggered --type zip
           az webapp deploy --resource-group ${{ env.RG }} --name ${{ env.SITE_NAME }} --src-path ./publish/WebJobContinuous.zip --target-path app_data/jobs/continuous/webjob-continuous --type zip
