@@ -11,7 +11,7 @@ env:
   SITE_NAME: webjobs-linux-web-app-container
 
 concurrency:
-  group: ${{ github.event.number || github.ref }}
+  group: container-${{ github.event.number || github.ref }}
   cancel-in-progress: true  
 
 jobs:

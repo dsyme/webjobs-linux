@@ -10,7 +10,7 @@ env:
   SITE_NAME: webjobs-linux-web-app
 
 concurrency:
-  group: ${{ github.event.number || github.ref }}
+  group: code-${{ github.event.number || github.ref }}
   cancel-in-progress: true  
 
 jobs:
