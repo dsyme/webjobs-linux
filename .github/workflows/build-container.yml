@@ -18,7 +18,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     name: Build and Push Docker image
-    timeout-minutes: 10
+    timeout-minutes: 5
 
     steps:
       - name: Checkout
@@ -55,16 +55,12 @@ jobs:
         run: |
           dotnet publish -c Release -o ./publish/WebJobTriggered ./WebJobTriggered/WebJobTriggered.csproj
           dotnet publish -c Release -o ./publish/WebJobContinuous ./WebJobContinuous/WebJobContinuous.csproj
-          pushd ./publish/WebJobTriggered/
-          zip -r ../WebJobTriggered.zip .
-          popd
-          pushd ./publish/WebJobContinuous/
-          zip -r ../WebJobContinuous.zip .
 
       - name: Deploy WebJobs
-        run: |
-          az webapp deploy --resource-group ${{ env.RG }} --name ${{ env.SITE_NAME }} --src-path ./publish/WebJobTriggered.zip --target-path app_data/Jobs/Triggered/webjob-triggered --type zip --restart false --clean true --async true
-          az webapp deploy --resource-group ${{ env.RG }} --name ${{ env.SITE_NAME }} --src-path ./publish/WebJobContinuous.zip --target-path app_data/Jobs/Continuous/webjob-continuous --type zip --restart false --clean false --async true
+        uses: azure/webapps-deploy@v3
+        with: 
+          app-name: ${{ env.SITE_NAME }}
+          package: './publish'
 
       - name: Deploy WebApi
         uses: azure/webapps-deploy@v3
