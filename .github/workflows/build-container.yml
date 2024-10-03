@@ -54,7 +54,7 @@ jobs:
         uses: azure/webapps-deploy@v3
         with: 
           app-name: ${{ env.SITE_NAME }}
-          images: '${{ env.REGISTRY_NAME }}.azurecr.io/webjob-linux-docker:sha-${{ github.sha }}' 
+          images: ${{ steps.meta.outputs.tags }}
 
       - name: Publish WebJobs
         run: |
