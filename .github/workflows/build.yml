@@ -41,9 +41,6 @@ jobs:
           with:
             context: .
             file: ./WebApi/Dockerfile
-            push: false
+            push: true
             tags: ${{ steps.meta.outputs.tags }}
             labels: ${{ steps.meta.outputs.labels }}
-            
-        - name: Push Docker image
-          run: docker push ${{ steps.meta.outputs.tags }}
