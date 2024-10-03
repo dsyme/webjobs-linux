@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="..\.dockerignore">
+      <Link>.dockerignore</Link>
+    </Content>
+  </ItemGroup>
+
+  <Target Name="PostpublishScript" AfterTargets="Publish">
+    <Exec Command="dotnet publish ../WebJobContinuous/WebJobContinuous.csproj -o $(PublishDir)app_data/Jobs/Continuous/webjob-continuous"/>
+    <Exec Command="dotnet publish ../WebJobTriggered/WebJobTriggered.csproj -o $(PublishDir)app_data/Jobs/Triggered/webjob-triggered"/>
+  </Target>
+</Project>

@@ -1,0 +1,1 @@
+dotnet ./WebJobTriggered.dll
