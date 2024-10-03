@@ -54,5 +54,5 @@ jobs:
 
       - name: Deploy WebJobs
         run: |
-          az webapp deploy --resource-group ${{ env.RG }} --name ${{ env.SITE_NAME }} --src-path publish/WebJobTriggered --type static --target-path app_data/jobs/triggered/webjob-triggered
-          az webapp deploy --resource-group ${{ env.RG }} --name ${{ env.SITE_NAME }} --src-path publish/WebJobContinuous --type static --target-path app_data/jobs/continuous/webjob-continuous
+          az webapp deploy --resource-group ${{ env.RG }} --name ${{ env.SITE_NAME }} --src-path ./publish/WebJobTriggered/ --type static --target-path app_data/jobs/triggered/webjob-triggered
+          az webapp deploy --resource-group ${{ env.RG }} --name ${{ env.SITE_NAME }} --src-path ./publish/WebJobContinuous/ --type static --target-path app_data/jobs/continuous/webjob-continuous
