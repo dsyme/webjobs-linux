@@ -18,7 +18,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     name: Build and Push Docker image
-    timeout-minutes: 5
+    timeout-minutes: 10
 
     steps:
       - name: Checkout
