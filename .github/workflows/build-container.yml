@@ -55,8 +55,11 @@ jobs:
         run: |
           dotnet publish -c Release -o ./publish/WebJobTriggered ./WebJobTriggered/WebJobTriggered.csproj
           dotnet publish -c Release -o ./publish/WebJobContinuous ./WebJobContinuous/WebJobContinuous.csproj
-          zip -r ./publish/WebJobTriggered.zip ./publish/WebJobTriggered
-          zip -r ./publish/WebJobContinuous.zip ./publish/WebJobContinuous
+          pushd ./publish/WebJobTriggered/
+          zip -r ../WebJobTriggered.zip .
+          popd
+          pushd ./publish/WebJobContinuous/
+          zip -r ../WebJobContinuous.zip .
 
       - name: Deploy WebJobs
         run: |
