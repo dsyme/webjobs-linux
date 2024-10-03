@@ -51,10 +51,10 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
-      - name: Publish and ZIP WebJobs
+      - name: Publish WebJobs
         run: |
-          dotnet publish -c Release -o ./publish/WebJobTriggered ./WebJobTriggered/WebJobTriggered.csproj
-          dotnet publish -c Release -o ./publish/WebJobContinuous ./WebJobContinuous/WebJobContinuous.csproj
+          dotnet publish -c Release -o ./publish/app_data/Jobs/Triggered/webjob-triggered ./WebJobTriggered/WebJobTriggered.csproj
+          dotnet publish -c Release -o ./publish/app_data/Jobs/Continuous/webjob-continuous ./WebJobContinuous/WebJobContinuous.csproj
 
       - name: Deploy WebJobs
         uses: azure/webapps-deploy@v3
