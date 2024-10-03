@@ -51,6 +51,8 @@ jobs:
         run: |
           dotnet publish -c Release -o ./publish/WebJobTriggered ./WebJobTriggered/WebJobTriggered.csproj
           dotnet publish -c Release -o ./publish/WebJobContinuous ./WebJobContinuous/WebJobContinuous.csproj
+          zip -r ./publish/WebJobTriggered.zip ./publish/WebJobTriggered
+          zip -r ./publish/WebJobContinuous.zip ./publish/WebJobContinuous
 
       - name: Deploy WebJobs
         run: |
@@ -58,5 +60,5 @@ jobs:
           echo ++++++++++++++++++++++++++
           pwd
           echo ++++++++++++++++++++++++++
-          az webapp deploy --resource-group ${{ env.RG }} --name ${{ env.SITE_NAME }} --src-path ./publish/WebJobTriggered/ --type static --target-path app_data/jobs/triggered/webjob-triggered
-          az webapp deploy --resource-group ${{ env.RG }} --name ${{ env.SITE_NAME }} --src-path ./publish/WebJobContinuous/ --type static --target-path app_data/jobs/continuous/webjob-continuous
+          az webapp deploy --resource-group ${{ env.RG }} --name ${{ env.SITE_NAME }} --src-path ./publish/WebJobTriggered.zip --target-path app_data/jobs/triggered/webjob-triggered --type zip
+          az webapp deploy --resource-group ${{ env.RG }} --name ${{ env.SITE_NAME }} --src-path ./publish/WebJobContinuous.zip --target-path app_data/jobs/continuous/webjob-continuous --type zip
