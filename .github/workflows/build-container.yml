@@ -60,8 +60,8 @@ jobs:
 
       - name: Deploy WebJobs
         run: |
-          az webapp deploy --resource-group ${{ env.RG }} --name ${{ env.SITE_NAME }} --src-path ./publish/WebJobTriggered.zip --target-path app_data/jobs/triggered/webjob-triggered --type zip --restart false
-          az webapp deploy --resource-group ${{ env.RG }} --name ${{ env.SITE_NAME }} --src-path ./publish/WebJobContinuous.zip --target-path app_data/jobs/continuous/webjob-continuous --type zip --restart false
+          az webapp deploy --resource-group ${{ env.RG }} --name ${{ env.SITE_NAME }} --src-path ./publish/WebJobTriggered.zip --target-path app_data/jobs/triggered/webjob-triggered --type zip --restart false --clean true
+          az webapp deploy --resource-group ${{ env.RG }} --name ${{ env.SITE_NAME }} --src-path ./publish/WebJobContinuous.zip --target-path app_data/jobs/continuous/webjob-continuous --type zip --restart false --clean false
 
       - name: Deploy WebApi
         uses: azure/webapps-deploy@v3
