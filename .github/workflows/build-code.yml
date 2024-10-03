@@ -6,7 +6,7 @@ on:
       - main
 
 env:
-  AZURE_CORE_OUTPUT: none
+  # AZURE_CORE_OUTPUT: none
   RG: webjobs-linux-rg
   SITE_NAME: webjobs-linux-web-app
 
