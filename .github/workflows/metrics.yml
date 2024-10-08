@@ -31,7 +31,7 @@ jobs:
         uses: github/issue-metrics@v3
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SEARCH_QUERY: 'repo:Azure/azure-webjobs-sdk is:issue created:${{ env.last_month }} -reason:"not planned"'
+          SEARCH_QUERY: 'repo:Azure/azure-webjobs-sdk is:issue created:${{ env.last_year }} -reason:"not planned"'
 
       - name: Save issue-metrics output to github
         run: |
