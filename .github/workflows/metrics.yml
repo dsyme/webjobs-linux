@@ -39,5 +39,5 @@ jobs:
 
       - name: Save issue-metrics output to github
         run: |
-          cat '# Issue Metrics for repository ${{ inputs.repository }}' >> $GITHUB_STEP_SUMMARY
+          echo '# Issue Metrics for repository ${{ inputs.repository }}' >> $GITHUB_STEP_SUMMARY
           cat issue_metrics.md >> $GITHUB_STEP_SUMMARY
