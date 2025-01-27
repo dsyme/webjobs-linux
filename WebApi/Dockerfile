@@ -31,7 +31,6 @@ RUN apt-get update \
     && echo "root:Docker!" | chpasswd \
     && chmod ugo+x ./entrypoint.sh
 COPY dockerfile-supporting-files/sshd_config /etc/ssh/
-USER 1001
 EXPOSE 8080 2222
 
 ENTRYPOINT [ "./entrypoint.sh" ]
