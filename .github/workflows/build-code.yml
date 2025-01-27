@@ -4,8 +4,8 @@ on:
   workflow_dispatch:
 
 env:
-  RG: webjobs-linux-rg
-  SITE_NAME: webjobs-linux-web-app
+  RG: webjobs-linux-rg-dsyme
+  SITE_NAME: webjobs-linux-web-app-dsyme
 
 concurrency:
   group: code-${{ github.event.number || github.ref }}
