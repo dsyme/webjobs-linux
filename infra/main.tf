@@ -67,7 +67,7 @@ resource "azurerm_storage_account" "storage" {
 }
 
 resource "azurerm_storage_queue" "queue" {
-  name                 = "webjobs-linux-queue"
+  name                 = "webjobs-linux-queue-dsyme"
   storage_account_name = azurerm_storage_account.storage.name
 }
 

@@ -5,7 +5,7 @@ namespace WebJob;
 
 public class Functions
 {
-    public static void ProcessQueueMessage([QueueTrigger("webjobs-linux-queue")] string message, ILogger logger)
+    public static void ProcessQueueMessage([QueueTrigger("webjobs-linux-queue-dsyme")] string message, ILogger logger)
     {
         logger.LogInformation($"Continuous Job received message: {message}");
     }
