@@ -1,4 +1,4 @@
-name: Build and Push
+name: Build and Push container
 
 on:
   workflow_dispatch:
