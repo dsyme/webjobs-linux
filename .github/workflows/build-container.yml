@@ -4,9 +4,9 @@ on:
   workflow_dispatch:
 
 env:
-  REGISTRY_NAME: webjobslinuxacr
-  RG: webjobs-linux-rg
-  SITE_NAME: webjobs-linux-web-app-container
+  REGISTRY_NAME: webjobslinuxacr2
+  RG: webjobs-linux-rg-dsyme
+  SITE_NAME: webjobs-linux-web-app-container-dsyme
 
 concurrency:
   group: container-${{ github.event.number || github.ref }}
