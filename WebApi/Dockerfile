@@ -3,17 +3,6 @@ USER $APP_UID
 WORKDIR /app
 EXPOSE 8080
 
-# Set up AppService-compatible SSH
-# Following instructions from
-# <https://learn.microsoft.com/en-us/azure/app-service/configure-custom-container?tabs=debian&pivots=container-linux#enable-ssh>
-COPY dockerfile-supporting-files/entrypoint.sh ./
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends dialog \
-    && apt-get install -y --no-install-recommends openssh-server \
-    && echo "root:Docker!" | chpasswd \
-    && chmod u+x ./entrypoint.sh
-COPY dockerfile-supporting-files/sshd_config /etc/ssh/
-
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
@@ -30,4 +19,16 @@ RUN dotnet publish "WebApi.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:Us
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "WebApi.dll"]
+
+# Set up AppService-compatible SSH
+# Following instructions from
+# <https://learn.microsoft.com/en-us/azure/app-service/configure-custom-container?tabs=debian&pivots=container-linux#enable-ssh>
+COPY dockerfile-supporting-files/entrypoint.sh .
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends dialog \
+    && apt-get install -y --no-install-recommends openssh-server \
+    && echo "root:Docker!" | chpasswd \
+    && chmod u+x ./entrypoint.sh
+COPY dockerfile-supporting-files/sshd_config /etc/ssh/
+
+ENTRYPOINT [ "./entrypoint.sh" ]
