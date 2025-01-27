@@ -20,15 +20,16 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 
-# Set up AppService-compatible SSH
-# Following instructions from
-# <https://learn.microsoft.com/en-us/azure/app-service/configure-custom-container?tabs=debian&pivots=container-linux#enable-ssh>
-COPY dockerfile-supporting-files/entrypoint.sh .
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends dialog \
-    && apt-get install -y --no-install-recommends openssh-server \
-    && echo "root:Docker!" | chpasswd \
-    && chmod u+x ./entrypoint.sh
 COPY dockerfile-supporting-files/sshd_config /etc/ssh/
+COPY dockerfile-supporting-files/entrypoint.sh .
+
+# Start and enable SSH
+RUN apk add openssh \
+    && echo "root:Docker!" | chpasswd \
+    && chmod +x ./entrypoint.sh \
+    && cd /etc/ssh/ \
+    && ssh-keygen -A
+
+EXPOSE 8000 2222
 
 ENTRYPOINT [ "./entrypoint.sh" ]
