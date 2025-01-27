@@ -29,7 +29,7 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends dialog \
     && apt-get install -y --no-install-recommends openssh-server \
     && echo "root:Docker!" | chpasswd \
-    && chmod u+x ./entrypoint.sh
+    && chmod ugo+x ./entrypoint.sh
 COPY dockerfile-supporting-files/sshd_config /etc/ssh/
 USER 1001
 EXPOSE 8080 2222
